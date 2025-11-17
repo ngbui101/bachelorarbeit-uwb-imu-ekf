@@ -1,0 +1,6 @@
+ANCHOR_POSITIONS_3D = {
+    "dist_e05a1": np.array([2.8, 0, 1.31]),
+    "dist_48e72": np.array([0.1, 0, 2.0]),
+    "dist_83a8d": np.array([1.86, 4.1, 2.10])
+}
+TAG_HEIGHT = 0.015 

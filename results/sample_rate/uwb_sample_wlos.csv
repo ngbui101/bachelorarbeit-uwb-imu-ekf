@@ -1,0 +1,5 @@
+mac_address,actual_measurements,expected_measurements,missing_measurements,received_percentage
+48e72903b3fc,538,683,145,78.78
+83a8d3e15c4,578,683,105,84.64
+e05a1b1fafc4,578,683,105,84.64
+Total,1694,2049,355,82.69
