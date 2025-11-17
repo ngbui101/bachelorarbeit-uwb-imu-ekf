@@ -23,14 +23,14 @@ Der EKF kompensiert Rauschen und Datenverlust, scheitert jedoch an systematische
 
 ## 🛠️ Methodik & Algorithmen
 
-[cite_start]Die Distanzmessung erfolgte mittels **Double-Sided Two-Way Ranging (DS-TWR)**. 
-Die Fusion der UWB- und IMU-Daten wurde über einen **Extended Kalman Filter (EKF)** realisiert. 
+Die Distanzmessung erfolgte mittels DS-TWR. 
+Die Fusion der UWB- und IMU-Daten wurde über einen EKF realisiert. 
 
 ![DS-TWR Verfahren](figures/DS-TWR.png)
-Schematische Darstellung des DS-TWR-Verfahrens
+* Schematische Darstellung des DS-TWR-Verfahrens
 
 ![EKF Ablaufdiagramm](figures/EKF.png)
-Ablaufdiagramm des implementierten EKF-Algorithmus
+* Ablaufdiagramm des implementierten EKF-Algorithmus
 ## 📁 Repository-Struktur
 * `/firmware/`: PlatformIO C++ Code für die ESP32-Geräte (Tag und Anker).
 * `/backend/`: Python-Skripte für die Datenverarbeitung, EKF-Implementierung und Analyse.
