@@ -36,8 +36,8 @@ The EKF reduced position error in the LOS and NLOS experiments. In the one-wall 
 ## Repository structure
 
 - `firmware/`: PlatformIO C++ project for the ESP32 tag, anchors, and debugger.
-- `backend/`: Python scripts for data collection, timestamp alignment, trilateration, EKF estimation, and plotting.
-- `results/`: Recorded CSV data, analysis scripts, and plots grouped by experiment.
+- [backend/](backend/README.md): Python scripts grouped into data collection, processing, analysis, and live visualization, with setup instructions and a script reference.
+- [results/](results/README.md): Recorded CSV data, plots, and experiment-specific script variants, with file descriptions and analysis examples.
 - `figures/`: Diagrams used in this README.
 
 ## License
