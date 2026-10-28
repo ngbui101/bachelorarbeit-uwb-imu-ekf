@@ -1,39 +1,45 @@
-# UWB-IMU-Sensorfusion mit Extended Kalman Filter
+# UWB-IMU Sensor Fusion with an Extended Kalman Filter
 
-Hardware: ESP32+DW3000+BNO085
+Bachelor's thesis project on indoor positioning using UWB range measurements and IMU data. The repository contains ESP32 firmware, Python scripts for sensor fusion and analysis, and experimental recordings.
 
-**➡️ [Link zur Videodemonstration des Versuchsaufbaus in LOS](https://youtu.be/Rbanm2skb94)**
+[Video of the line-of-sight experiment](https://youtu.be/Rbanm2skb94)
 
-## 🚀Ergebnisse
+## Hardware
 
-Der EKF kompensiert Rauschen und Datenverlust, scheitert jedoch an systematischem Bias durch Wände.
+- ESP32 microcontrollers
+- DW3000 UWB modules
+- BNO085 IMU
 
-| Szenario | Algorithmus | RMSE (m) | 95% CDF (m) |
-| :--- | :--- | :--- | :--- |
-| **LOS** | Trilateration | 0,078 | 0,139 |
-| (Ideal) | **EKF-Fusion** | **0,056** | **0,086** |
-| | *Verbesserung* | *28,2%* | *38,1%* |
+## Method
+
+The tag measures distances to UWB anchors using double-sided two-way ranging (DS-TWR). An Extended Kalman Filter (EKF) combines these measurements with IMU acceleration and orientation to estimate a two-dimensional position. The filter applies a zero-velocity update when the tag is stationary.
+
+![DS-TWR sequence](figures/DS-TWR.png)
+
+![EKF flowchart](figures/EKF.png)
+
+## Results
+
+Position errors from the experiments are listed below. RMSE is the root mean square error; the 95th percentile is the error below which 95% of samples fall.
+
+| Scenario | Algorithm | RMSE (m) | 95th percentile (m) |
 | --- | --- | --- | --- |
-| **WLOS** | Trilateration | 0,520 | 0,858 |
-| (1 Wand) | **EKF-Fusion** | **0,518** | **0,817** |
-| | *Verbesserung* | *0,4%* | *4,8%* |
-| --- | --- | --- | --- |
-| **NLOS** | Trilateration¹ | 0,608 | 0,967 |
-| (Stark) | **EKF-Fusion**² | **0,219** | **0,330** |
-| | *Verbesserung* | *64,0%* | *65,9%* |
+| LOS (line of sight) | Trilateration | 0.078 | 0.139 |
+| LOS (line of sight) | EKF | 0.056 | 0.086 |
+| WLOS (one wall) | Trilateration | 0.520 | 0.858 |
+| WLOS (one wall) | EKF | 0.518 | 0.817 |
+| NLOS (heavily obstructed) | Trilateration | 0.608 | 0.967 |
+| NLOS (heavily obstructed) | EKF | 0.219 | 0.330 |
 
+The EKF reduced position error in the LOS and NLOS experiments. In the one-wall experiment, the range bias remained and the RMSE changed little.
 
-## 🛠️ Methodik & Algorithmen
+## Repository structure
 
-Die Distanzmessung erfolgte mittels DS-TWR. 
-Die Fusion der UWB- und IMU-Daten wurde über einen EKF realisiert. 
+- `firmware/`: PlatformIO C++ project for the ESP32 tag, anchors, and debugger.
+- `backend/`: Python scripts for data collection, timestamp alignment, trilateration, EKF estimation, and plotting.
+- `results/`: Recorded CSV data, analysis scripts, and plots grouped by experiment.
+- `figures/`: Diagrams used in this README.
 
-![DS-TWR Verfahren](figures/DS-TWR.png)
-* Schematische Darstellung des DS-TWR-Verfahrens
+## License
 
-![EKF Ablaufdiagramm](figures/EKF.png)
-* Ablaufdiagramm des implementierten EKF-Algorithmus
-## 📁 Repository-Struktur
-* `/firmware/`: PlatformIO C++ Code für die ESP32-Geräte (Tag und Anker).
-* `/backend/`: Python-Skripte für die Datenverarbeitung, EKF-Implementierung und Analyse.
-* `/results/`: Experimentelle Rohdaten (CSV) und generierte Plots, sortiert nach Szenarien (exp1_1, exp2_1, ...).
+The original project code is available under the [MIT License](LICENSE). Bundled third-party code, including `firmware/lib/Dw3000/`, retains its own license terms and copyright notices.
